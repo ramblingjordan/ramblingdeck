@@ -1,0 +1,5 @@
+name: Hello World
+action:
+  command: python
+  args: 
+    - ./scripts/HelloWorld.py
