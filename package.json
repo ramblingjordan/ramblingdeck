@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@julusian/jpeg-turbo": "^0.5.2",
-    "elgato-stream-deck": "^3.1.0"
+    "elgato-stream-deck": "^3.1.0",
+    "jimp": "^0.8.5"
   }
 }
