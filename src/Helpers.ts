@@ -57,4 +57,27 @@ export class Helpers {
     let map: Array<Map> = doc
     return map
   }
+
+  executeAction (action: string) {
+    const execSync = require('child_process').execSync
+    try {
+      const output = execSync(action, { encoding: 'utf-8' })
+      if (output !== '') { // silence blank outputs
+        console.log('Output was: ', output)
+      }
+    } catch (error) {
+      // Action failed.
+    }
+  }
+
+  getKeyFromIndex (map: Array<Map>, index: number) {
+    let keyId: string = ''
+    for (let mapping of map) {
+      if (mapping.keyIndex === index) {
+        keyId = mapping.keyId
+        break
+      }
+    }
+    return keyId
+  }
 }

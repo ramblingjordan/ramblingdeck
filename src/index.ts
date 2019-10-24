@@ -29,16 +29,33 @@ async function main () {
   let map: Array<Map> = helpers.loadMap('./layouts/map.yml')
 
   console.log('Loading mapping to StreamDeck')
-  map.forEach((mapping) => {
+
+  for (let mapping of map) {
     helpers.setKey(myStreamDeck, mapping.keyIndex, keys[mapping.keyId])
-  })
+  }
 
   myStreamDeck.on('down', keyIndex => {
-    console.log('key %d down', keyIndex)
+    let keyId = helpers.getKeyFromIndex(map, keyIndex)
+
+    if (keys[keyId]) {
+      console.log('KeyId: ' + keyId)
+      console.log('Action: ' + keys[keyId].down)
+      helpers.executeAction(keys[keyId].down)
+    } else {
+      console.log('Key #' + keyIndex + ' pressed without associated action.')
+    }
   })
 
   myStreamDeck.on('up', keyIndex => {
-    console.log('key %d up', keyIndex)
+    let keyId = helpers.getKeyFromIndex(map, keyIndex)
+
+    if (keys[keyId]) {
+      if (keys[keyId].up) {
+        console.log('KeyId: ' + keyId)
+        console.log('Action: ' + keys[keyId].up)
+        helpers.executeAction(keys[keyId].up)
+      }
+    }
   })
 
   // Fired whenever an error is detected by the `node-hid` library.

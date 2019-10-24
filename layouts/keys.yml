@@ -2,11 +2,14 @@
   title: test key
   bgColor: '#FFFFFF'
   icon: ./icons/test.png
-  action: console.log("test key pressed")
+  down: echo test key pressed
+  up: echo test key released
 - id: 'test_key_2'
   title: test key 2
   bgColor: '#0000FF'
   icon: ./icons/test.png
-  action: console.log("test key 2 pressed")
+  down: echo test key 2 pressed
+  up: echo test key 2 released
 - id: 'test_no_icon'
   bgColor: '#FF0000'
+  down: code-insiders /
