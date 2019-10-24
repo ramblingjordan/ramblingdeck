@@ -10,25 +10,15 @@ type Map = {
 
 async function main () {
   const chalk = require('chalk')
+  const helpers = new Helpers()
 
   console.log('')
   console.log(chalk.black.bgWhite('--- Welcome to RamblingDeck ---'))
 
-  console.log('Connecting to deck.')
   const myStreamDeck = openStreamDeck() // Will throw an error if no Stream Decks are connected.
-
-  console.log('Clearing keys.')
   myStreamDeck.clearAllKeys()
-
-  const helpers = new Helpers()
-
-  console.log('Loading keys.')
   let keys: Keys = helpers.loadKeys('./layouts/keys.yml')
-
-  console.log('Loading map.')
   let map: Array<Map> = helpers.loadMap('./layouts/map.yml')
-
-  console.log('Loading mapping to StreamDeck')
 
   for (let mapping of map) {
     helpers.setKey(myStreamDeck, mapping.keyIndex, keys[mapping.keyId])
