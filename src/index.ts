@@ -1,30 +1,52 @@
 import { openStreamDeck } from 'elgato-stream-deck'
+import { Helpers } from './Helpers'
 import { Key } from './Key'
 
-function setKey (key: Key) {
-  if (key.bgColor) {
-    let convert = require('color-convert')
-    let rgbColor = convert.hex.rgb(key.bgColor)
-    myStreamDeck.fillColor(0, rgbColor[0], rgbColor[1], rgbColor[2])
-  }
+type Keys = {[key: string]: Key}
+type Map = {
+  keyIndex: number
+  keyId: string
 }
 
-const myStreamDeck = openStreamDeck() // Will throw an error if no Stream Decks are connected.
-let key = new Key('test', '#FFFFFF', '', '')
+async function main () {
+  const chalk = require('chalk')
 
-myStreamDeck.clearAllKeys()
-setKey(key)
+  console.log('')
+  console.log(chalk.black.bgWhite('--- Welcome to RamblingDeck ---'))
 
-myStreamDeck.on('down', keyIndex => {
-  console.log('key %d down', keyIndex)
-})
+  console.log('Connecting to deck.')
+  const myStreamDeck = openStreamDeck() // Will throw an error if no Stream Decks are connected.
 
-myStreamDeck.on('up', keyIndex => {
-  console.log('key %d up', keyIndex)
-})
+  console.log('Clearing keys.')
+  myStreamDeck.clearAllKeys()
 
-// Fired whenever an error is detected by the `node-hid` library.
-// Always add a listener for this event! If you don't, errors will be silently dropped.
-myStreamDeck.on('error', error => {
-  console.error(error)
-})
+  const helpers = new Helpers()
+
+  console.log('Loading keys.')
+  let keys: Keys = helpers.loadKeys('./layouts/keys.yml')
+
+  console.log('Loading map.')
+  let map: Array<Map> = helpers.loadMap('./layouts/map.yml')
+
+  console.log('Loading mapping to StreamDeck')
+  map.forEach((mapping) => {
+    helpers.setKey(myStreamDeck, mapping.keyIndex, keys[mapping.keyId])
+  })
+
+  myStreamDeck.on('down', keyIndex => {
+    console.log('key %d down', keyIndex)
+  })
+
+  myStreamDeck.on('up', keyIndex => {
+    console.log('key %d up', keyIndex)
+  })
+
+  // Fired whenever an error is detected by the `node-hid` library.
+  // Always add a listener for this event! If you don't, errors will be silently dropped.
+  myStreamDeck.on('error', error => {
+    console.error(error)
+  })
+}
+
+// tslint:disable-next-line: no-floating-promises
+main()

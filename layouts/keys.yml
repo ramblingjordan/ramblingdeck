@@ -1,0 +1,12 @@
+- id: 'test_key'
+  title: test key
+  bgColor: '#FFFFFF'
+  icon: ./icons/test.png
+  action: console.log("test key pressed")
+- id: 'test_key_2'
+  title: test key 2
+  bgColor: '#0000FF'
+  icon: ./icons/test.png
+  action: console.log("test key 2 pressed")
+- id: 'test_no_icon'
+  bgColor: '#FF0000'
