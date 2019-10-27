@@ -15,11 +15,10 @@ async function main () {
   sd.mapping = map
   sd.applyMap()
 
-  // Deck Listeners
+  // Stream Deck Listeners
   sd.onDown()
   sd.onUp()
   sd.onError()
 }
 
-// tslint:disable-next-line: no-floating-promises
-main()
+void main()

@@ -1,6 +1,6 @@
 import { openStreamDeck } from 'elgato-stream-deck'
 import { Helpers } from './Helpers'
-import { Map, Mapping, Keys } from './Types'
+import { Mapping, Keys } from './Types'
 import { Key } from './Key'
 
 export class StreamDeck {
@@ -69,8 +69,10 @@ export class StreamDeck {
   onDown () {
     this.sd.on('down', (keyIndex: number) => {
       let keyId = this.getKeyFromIndex(keyIndex)
-      if (this._keys[keyId]) {
-        this.helpers.executeAction(this._keys[keyId].down)
+      let key = this._keys[keyId]
+      if (key) {
+        this.helpers.keyActionMessage('down', keyIndex, keyId, key.down)
+        this.helpers.executeAction(key.down)
       }
     })
   }
@@ -78,9 +80,11 @@ export class StreamDeck {
   onUp () {
     this.sd.on('up', (keyIndex: number) => {
       let keyId = this.getKeyFromIndex(keyIndex)
-      if (this._keys[keyId]) {
-        if (this._keys[keyId].up) {
-          this.helpers.executeAction(this._keys[keyId].up)
+      let key = this._keys[keyId]
+      if (key) {
+        if (key.up) {
+          this.helpers.keyActionMessage('up', keyIndex, keyId, key.up)
+          this.helpers.executeAction(key.up)
         }
       }
     })

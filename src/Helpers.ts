@@ -31,7 +31,6 @@ export class Helpers {
   }
 
   executeAction (action: Action) {
-    console.log('Action type: ' + action.type)
     const execSync = require('child_process').execSync
     try {
       const output = execSync(action, { encoding: 'utf-8' })
@@ -41,5 +40,17 @@ export class Helpers {
     } catch (error) {
       // Action failed.
     }
+  }
+
+  keyActionMessage (buttonMovement: string, keyIndex: number, keyId: string, keyAction: Action) {
+    let logMessage: string = '' +
+    '------------------------------\n' +
+    'Key Index: ' + keyIndex + '\n' +
+    'Key ID: ' + keyId + '\n' +
+    'Action: ' + buttonMovement + '\n' +
+    '  Type: ' + keyAction.type + '\n' +
+    '  Command: ' + keyAction.command + '\n' +
+    '------------------------------'
+    console.log(logMessage)
   }
 }

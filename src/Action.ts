@@ -15,4 +15,8 @@ export class Action {
   get type (): commandType {
     return this._type
   }
+
+  get command (): string {
+    return this._command
+  }
 }
