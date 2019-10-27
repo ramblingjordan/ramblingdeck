@@ -1,6 +1,10 @@
 enum commandType {
-  Bash,
-  Layout
+  BASH,
+  MAP,
+  TOGGLE,
+  URL,
+  SEQUENCE,
+  DELAY
 }
 
 export class Action {
