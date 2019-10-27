@@ -1,12 +1,14 @@
+import { Action } from './Action'
+
 export class Key {
   private _id: string
   private _title: string
   private _bgColor: string
   private _icon: string
-  private _down: string
-  private _up: string
+  private _down: Action
+  private _up: Action
 
-  constructor (id: string, title: string, bgColor: string, icon: string, down: any, up: any) {
+  constructor (id: string, title: string, bgColor: string, icon: string, down: Action, up: Action) {
     this._id = id
     this._title = title
     this._bgColor = bgColor
@@ -47,19 +49,19 @@ export class Key {
     this._icon = newIcon
   }
 
-  get down (): string {
+  get down (): Action {
     return this._down
   }
 
-  set down (newDown: string) {
+  set down (newDown: Action) {
     this._down = newDown
   }
 
-  get up (): string {
+  get up (): Action {
     return this._up
   }
 
-  set up (newUp: string) {
+  set up (newUp: Action) {
     this._up = newUp
   }
 }
