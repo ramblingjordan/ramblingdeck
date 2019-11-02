@@ -1,19 +1,19 @@
-import { StreamDeck } from './StreamDeck'
-import { Helpers } from './Helpers'
+import { DeckController } from './DeckController'
+import { FileLoader } from './FileLoader'
 import { Map, Keys } from './Types'
 
 async function main () {
   const chalk = require('chalk')
-  const helpers = new Helpers()
+  const fileLoader = new FileLoader()
 
   console.log(chalk.black.bgWhite('\n --- Welcome to RamblingDeck --- \n'))
 
   // Load keys and deck
-  let keys: Keys = helpers.loadKeysFile('./layouts/keys.yml')
-  const sd = new StreamDeck(keys)
+  let keys: Keys = fileLoader.loadKeysFile('./layouts/keys.yml')
+  const sd = new DeckController(keys)
 
   // Set map from file
-  let map: Array<Map> = helpers.loadMapFile('./layouts/map.yml')
+  let map: Array<Map> = fileLoader.loadMapFile('./layouts/map.yml')
   sd.mapping = map
   sd.applyMap()
 

@@ -1,5 +1,5 @@
-import { Key } from './Key'
-import { Action } from './Action'
+import { Key } from './models/Key'
+import { Action } from './models/Action'
 
 export type Keys = {[key: string]: Key}
 
@@ -9,8 +9,3 @@ export type Map = {
 }
 
 export type Mapping = Array<Map>
-
-export type Sequence = {
-  name: string
-  actions: Action[]
-}

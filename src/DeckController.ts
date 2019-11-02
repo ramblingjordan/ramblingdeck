@@ -1,11 +1,14 @@
 import { openStreamDeck } from 'elgato-stream-deck'
-import { Helpers } from './Helpers'
 import { Mapping, Keys } from './Types'
-import { Key } from './Key'
+import { Key } from './models/Key'
+import { ActionRunner } from './ActionRunner'
+import { Logger } from './Logger'
 
-export class StreamDeck {
+const actionRunner = new ActionRunner()
+const logger = new Logger()
+
+export class DeckController {
   private sd: any
-  private helpers = new Helpers()
 
   private _keys: Keys
   private _mapping: Mapping = []
@@ -71,8 +74,10 @@ export class StreamDeck {
       let keyId = this.getKeyFromIndex(keyIndex)
       let key = this._keys[keyId]
       if (key) {
-        this.helpers.keyActionMessage('down', keyIndex, keyId, key.down)
-        this.helpers.executeAction(key.down)
+        if (key.down) {
+          logger.keyActionMessage('down', keyIndex, keyId, key.down)
+          actionRunner.runAction(key.down)
+        }
       }
     })
   }
@@ -83,8 +88,8 @@ export class StreamDeck {
       let key = this._keys[keyId]
       if (key) {
         if (key.up) {
-          this.helpers.keyActionMessage('up', keyIndex, keyId, key.up)
-          this.helpers.executeAction(key.up)
+          logger.keyActionMessage('up', keyIndex, keyId, key.up)
+          actionRunner.runAction(key.up)
         }
       }
     })

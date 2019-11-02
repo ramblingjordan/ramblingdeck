@@ -5,16 +5,10 @@
   down: 
     type: bash
     command: echo test key pressed
-  up: 
-    type: bash
-    command: echo test key released
 - id: 'test_key_2'
   title: test key 2
   bgColor: '#0000FF'
   icon: ./icons/test.png
-  down:
-    type: bash
-    command: echo test key 2 pressed
   up:
     type: bash
     command: echo test key 2 released
