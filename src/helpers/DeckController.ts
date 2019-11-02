@@ -1,5 +1,5 @@
 import { openStreamDeck } from 'elgato-stream-deck'
-import { Mapping, Keys, Dict } from '../models/Types'
+import { Mapping } from '../models/Types'
 import { Key } from '../models/Key'
 import { ActionRunner } from './ActionRunner'
 import { Logger } from './Logger'
