@@ -1,12 +1,8 @@
 import { openStreamDeck } from 'elgato-stream-deck'
-import { Key } from '../models/Key'
+import { Key, KeyMap } from '../models/Key'
 import { ActionRunner } from './ActionRunner'
 import { Logger } from './Logger'
 
-type KeyMap = {
-  keyIndex: number
-  keyId: string
-}
 type KeyMapping = Array<KeyMap>
 
 const actionRunner = new ActionRunner()
