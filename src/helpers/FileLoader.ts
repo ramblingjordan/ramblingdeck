@@ -12,17 +12,14 @@ export class FileLoader {
   }
 
   loadArrayFile<T> (filePath: string): T[] {
-    const doc = this.loadFile(filePath)
-    let ret: Array<T> = doc
-    return ret
+    return this.loadFile(filePath)
   }
 
   loadFile (filePath: string): any {
     const yaml = require('js-yaml')
     const fs = require('fs')
-    const doc = yaml.safeLoad(
+    return yaml.safeLoad(
       fs.readFileSync(filePath, 'utf8')
     )
-    return doc
   }
 }

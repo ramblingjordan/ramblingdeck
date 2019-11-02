@@ -1,5 +1,10 @@
 import { Action } from './Action'
 
+export type KeyMap = {
+  keyIndex: number
+  keyId: string
+}
+
 export class Key {
   id: string
   title: string

@@ -1,8 +1,13 @@
 import { openStreamDeck } from 'elgato-stream-deck'
-import { Mapping } from '../models/Types'
 import { Key } from '../models/Key'
 import { ActionRunner } from './ActionRunner'
 import { Logger } from './Logger'
+
+type KeyMap = {
+  keyIndex: number
+  keyId: string
+}
+type KeyMapping = Array<KeyMap>
 
 const actionRunner = new ActionRunner()
 const logger = new Logger()
@@ -11,7 +16,7 @@ export class DeckController {
   private sd: any
 
   private _keys: Map<string, Key>
-  private _mapping: Mapping = []
+  private _mapping: KeyMapping = []
 
   constructor (keys: Map<string, Key>) {
     this.sd = openStreamDeck()
@@ -19,7 +24,7 @@ export class DeckController {
     this._keys = keys
   }
 
-  set mapping (newMapping: Mapping) {
+  set mapping (newMapping: KeyMapping) {
     this._mapping = newMapping
     this.applyMap()
   }
@@ -75,11 +80,9 @@ export class DeckController {
     this.sd.on('down', (keyIndex: number) => {
       let keyId = this.getKeyFromIndex(keyIndex)
       let key = this._keys.get(keyId)
-      if (key) {
-        if (key.down) {
-          logger.keyActionMessage('down', keyIndex, keyId, key.down)
-          actionRunner.runAction(key.down)
-        }
+      if (key && key.down) {
+        logger.keyActionMessage('down', keyIndex, keyId, key.down)
+        actionRunner.runAction(key.down)
       }
     })
   }
@@ -88,11 +91,9 @@ export class DeckController {
     this.sd.on('up', (keyIndex: number) => {
       let keyId = this.getKeyFromIndex(keyIndex)
       let key = this._keys.get(keyId)
-      if (key) {
-        if (key.up) {
-          logger.keyActionMessage('up', keyIndex, keyId, key.up)
-          actionRunner.runAction(key.up)
-        }
+      if (key && key.up) {
+        logger.keyActionMessage('up', keyIndex, keyId, key.up)
+        actionRunner.runAction(key.up)
       }
     })
   }

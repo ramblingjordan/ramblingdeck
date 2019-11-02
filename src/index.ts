@@ -1,6 +1,6 @@
 import { DeckController } from './helpers/DeckController'
 import { FileLoader } from './helpers/FileLoader'
-import { Map } from './models/Types'
+import { KeyMap } from './models/Key'
 
 async function main () {
   const chalk = require('chalk')
@@ -16,7 +16,7 @@ async function main () {
   const sd = new DeckController(keys)
 
   // Set map from file
-  let map: Array<Map> = fileLoader.loadArrayFile<Map>('./layouts/' + layout + '/maps/testing.yml')
+  let map: Array<KeyMap> = fileLoader.loadArrayFile<KeyMap>('./layouts/' + layout + '/maps/testing.yml')
 
   sd.mapping = map
   sd.applyMap()
