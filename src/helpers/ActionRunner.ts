@@ -1,5 +1,5 @@
-import { Action } from './models/Action'
-import { Sequence } from './models/Sequence'
+import { Action } from '../models/Action'
+import { Sequence } from '../models/Sequence'
 
 export class ActionRunner {
   runSequence (sequence: Sequence) {

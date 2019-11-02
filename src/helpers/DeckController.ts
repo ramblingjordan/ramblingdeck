@@ -1,6 +1,6 @@
 import { openStreamDeck } from 'elgato-stream-deck'
-import { Mapping, Keys } from './Types'
-import { Key } from './models/Key'
+import { Mapping, Keys, Dict } from '../models/Types'
+import { Key } from '../models/Key'
 import { ActionRunner } from './ActionRunner'
 import { Logger } from './Logger'
 
@@ -10,11 +10,12 @@ const logger = new Logger()
 export class DeckController {
   private sd: any
 
-  private _keys: Keys
+  private _keys: Map<string, Key>
   private _mapping: Mapping = []
 
-  constructor (keys: Keys) {
+  constructor (keys: Map<string, Key>) {
     this.sd = openStreamDeck()
+    this.sd.clearAllKeys()
     this._keys = keys
   }
 
@@ -28,33 +29,34 @@ export class DeckController {
   }
 
   applyMap () {
-    this.clearAll()
     for (let map of this._mapping) {
-      this.setKey(map.keyIndex, this._keys[map.keyId])
+      this.setKey(map.keyIndex, this._keys.get(map.keyId))
     }
   }
 
-  setKey (deckIndex: number, key: Key) {
-    if (key.bgColor) {
-      let convert = require('color-convert')
-      let rgbColor = convert.hex.rgb(key.bgColor)
-      this.sd.fillColor(deckIndex, rgbColor[0], rgbColor[1], rgbColor[2])
-    }
+  setKey (deckIndex: number, key: Key | undefined) {
+    if (key !== undefined) {
+      if (key.bgColor) {
+        let convert = require('color-convert')
+        let rgbColor = convert.hex.rgb(key.bgColor)
+        this.sd.fillColor(deckIndex, rgbColor[0], rgbColor[1], rgbColor[2])
+      }
 
-    if (key.icon) {
-      const path = require('path')
-      const sharp = require('sharp')
-      sharp(path.join('layouts', key.icon))
-        .flatten()
-        .resize(this.sd.ICON_SIZE, this.sd.ICON_SIZE)
-        .raw()
-        .toBuffer()
-        .then((buff: any) => {
-          this.sd.fillImage(deckIndex, buff)
-        })
-        .catch((error: any) => {
-          console.log(error)
-        })
+      if (key.icon) {
+        const path = require('path')
+        const sharp = require('sharp')
+        sharp(path.join('layouts', key.icon))
+          .flatten()
+          .resize(this.sd.ICON_SIZE, this.sd.ICON_SIZE)
+          .raw()
+          .toBuffer()
+          .then((buff: any) => {
+            this.sd.fillImage(deckIndex, buff)
+          })
+          .catch((error: any) => {
+            console.log(error)
+          })
+      }
     }
   }
 
@@ -72,7 +74,7 @@ export class DeckController {
   onDown () {
     this.sd.on('down', (keyIndex: number) => {
       let keyId = this.getKeyFromIndex(keyIndex)
-      let key = this._keys[keyId]
+      let key = this._keys.get(keyId)
       if (key) {
         if (key.down) {
           logger.keyActionMessage('down', keyIndex, keyId, key.down)
@@ -85,7 +87,7 @@ export class DeckController {
   onUp () {
     this.sd.on('up', (keyIndex: number) => {
       let keyId = this.getKeyFromIndex(keyIndex)
-      let key = this._keys[keyId]
+      let key = this._keys.get(keyId)
       if (key) {
         if (key.up) {
           logger.keyActionMessage('up', keyIndex, keyId, key.up)

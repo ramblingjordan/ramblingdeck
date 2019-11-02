@@ -1,10 +1,5 @@
-import { Key } from './models/Key'
-import { Keys } from './Types'
-
-type Map = {
-  keyIndex: number
-  keyId: string
-}
+import { Key } from '../models/Key'
+import { Keys, Dict } from '../models/Types'
 
 export class FileLoader {
 
@@ -15,6 +10,15 @@ export class FileLoader {
       keys[key.id] = key
     })
     return keys
+  }
+
+  loadKeysMap (layoutPath: string): Map<string, Key> {
+    let ret = new Map<string, Key>()
+    let doc = this.loadFile(layoutPath)
+    for (let key of doc) {
+      ret.set(key.id, key)
+    }
+    return ret
   }
 
   loadArrayFile<T> (filePath: string): T[] {

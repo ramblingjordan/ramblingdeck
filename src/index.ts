@@ -1,6 +1,7 @@
-import { DeckController } from './DeckController'
-import { FileLoader } from './FileLoader'
-import { Map, Keys } from './Types'
+import { DeckController } from './helpers/DeckController'
+import { FileLoader } from './helpers/FileLoader'
+import { Map, Dict } from './models/Types'
+import { Key } from './models/Key'
 
 async function main () {
   const chalk = require('chalk')
@@ -11,11 +12,14 @@ async function main () {
   console.log(chalk.black.bgWhite('\n --- Welcome to RamblingDeck --- \n'))
 
   // Load keys and deck
-  let keys: Keys = fileLoader.loadKeysFile('./layouts/' + layout + '/keys.yml')
-  const sd = new DeckController(keys)
+  let keys: Dict<Key> = fileLoader.loadKeysFile('./layouts/' + layout + '/keys.yml')
+  let keysMap = fileLoader.loadKeysMap('./layouts/' + layout + '/keys.yml')
+
+  const sd = new DeckController(keysMap)
 
   // Set map from file
   let map: Array<Map> = fileLoader.loadArrayFile<Map>('./layouts/' + layout + '/maps/testing.yml')
+
   sd.mapping = map
   sd.applyMap()
 

@@ -1,7 +1,8 @@
-import { Key } from './models/Key'
-import { Action } from './models/Action'
+import { Key } from './Key'
 
 export type Keys = {[key: string]: Key}
+
+export type Dict<T> = {[key: string]: T}
 
 export type Map = {
   keyIndex: number

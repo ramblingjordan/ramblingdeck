@@ -1,4 +1,4 @@
-import { Action } from './models/Action'
+import { Action } from '../models/Action'
 
 export class Logger {
   keyActionMessage (buttonMovement: string, keyIndex: number, keyId: string, keyAction: Action) {
