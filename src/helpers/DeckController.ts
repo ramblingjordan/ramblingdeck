@@ -2,6 +2,7 @@ import { openStreamDeck } from 'elgato-stream-deck'
 import { Key, KeyMap } from '../models/Key'
 import { ActionRunner } from './ActionRunner'
 import { Logger } from './Logger'
+import { ImageHelper } from './ImageHelper'
 
 type KeyMapping = Array<KeyMap>
 
@@ -36,6 +37,7 @@ export class DeckController {
   }
 
   setKey (deckIndex: number, key: Key | undefined) {
+    const path = require('path')
     if (key !== undefined) {
       if (key.bgColor) {
         let convert = require('color-convert')
@@ -44,21 +46,24 @@ export class DeckController {
       }
 
       if (key.icon) {
-        const path = require('path')
-        const sharp = require('sharp')
-        sharp(path.join('layouts', key.icon))
-          .flatten()
-          .resize(this.sd.ICON_SIZE, this.sd.ICON_SIZE)
-          .raw()
-          .toBuffer()
-          .then((buff: any) => {
-            this.sd.fillImage(deckIndex, buff)
-          })
-          .catch((error: any) => {
-            console.log(error)
-          })
+        this.drawImageOnKey(deckIndex, path.join('layouts', key.icon))
       }
     }
+  }
+
+  drawImageOnKey (index: number, iconFilePath: string) {
+    const sharp = require('sharp')
+    sharp(iconFilePath)
+      .flatten()
+      .resize(this.sd.ICON_SIZE, this.sd.ICON_SIZE)
+      .raw()
+      .toBuffer()
+      .then((buff: any) => {
+        this.sd.fillImage(index, buff)
+      })
+      .catch((error: any) => {
+        console.log(error)
+      })
   }
 
   getKeyFromIndex (index: number) {

@@ -24,7 +24,6 @@
     "posttest": "npm.cmd run check"
   },
   "devDependencies": {
-    "@types/node": "^10.0.3",
     "gts": "^1.1.0",
     "nodemon": "^1.19.4",
     "ts-node": "^8.4.1",
@@ -40,6 +39,7 @@
     "figlet": "^1.2.4",
     "jimp": "^0.8.5",
     "js-yaml": "^3.13.1",
+    "object-hash": "^2.0.0",
     "sharp": "^0.23.1"
   }
 }
