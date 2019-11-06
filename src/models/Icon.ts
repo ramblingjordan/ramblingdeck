@@ -1,10 +1,12 @@
 export class Icon {
   name: string
   text: string
+  bgColor: string
 
-  constructor (newName: string, newText: string) {
+  constructor (newName: string) {
     this.name = newName
-    this.text = newText
+    this.text = ''
+    this.bgColor = ''
   }
 
   getHash (): string {

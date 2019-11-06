@@ -1,14 +1,14 @@
 - id: 'test_key'
   title: test key
   bgColor: '#FFFFFF'
-  icon: ./development/icons/test.png
+  image: ./development/icons/test.png
   down:
     type: bash
     command: echo test key pressed
 - id: 'test_key_2'
   title: test key 2
   bgColor: '#0000FF'
-  icon: ./development/icons/test.png
+  image: ./development/icons/test.png
   up:
     type: bash
     command: echo test key 2 released

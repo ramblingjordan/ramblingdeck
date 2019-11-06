@@ -9,15 +9,15 @@ export class Key {
   id: string
   title: string
   bgColor: string
-  icon: string
+  image: string
   down: Action
   up: Action
 
-  constructor (id: string, title: string, bgColor: string, icon: string, down: Action, up: Action) {
+  constructor (id: string, title: string, bgColor: string, image: string, down: Action, up: Action) {
     this.id = id
     this.title = title
     this.bgColor = bgColor
-    this.icon = icon
+    this.image = image
     this.down = down
     this.up = up
   }

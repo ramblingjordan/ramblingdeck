@@ -45,8 +45,8 @@ export class DeckController {
         this.sd.fillColor(deckIndex, rgbColor[0], rgbColor[1], rgbColor[2])
       }
 
-      if (key.icon) {
-        this.drawImageOnKey(deckIndex, path.join('layouts', key.icon))
+      if (key.image) {
+        this.drawImageOnKey(deckIndex, path.join('layouts', key.image))
       }
     }
   }
