@@ -12,13 +12,13 @@ const logger = new Logger()
 export class DeckController {
   private sd: any
 
-  private _keys: Map<string, Key>
+  keys: Map<string, Key>
   private _mapping: KeyMapping = []
 
-  constructor (keys: Map<string, Key>) {
+  constructor () {
     this.sd = openStreamDeck()
     this.sd.clearAllKeys()
-    this._keys = keys
+    this.keys = new Map<string, Key>()
   }
 
   set mapping (newMapping: KeyMapping) {
@@ -32,7 +32,7 @@ export class DeckController {
 
   applyMap () {
     for (let map of this._mapping) {
-      this.setKey(map.keyIndex, this._keys.get(map.keyId))
+      this.setKey(map.keyIndex, this.keys.get(map.keyId))
     }
   }
 
@@ -77,10 +77,16 @@ export class DeckController {
     return keyId
   }
 
+  startListeners () {
+    this.onDown()
+    this.onUp()
+    this.onError()
+  }
+
   onDown () {
     this.sd.on('down', (keyIndex: number) => {
       let keyId = this.getKeyFromIndex(keyIndex)
-      let key = this._keys.get(keyId)
+      let key = this.keys.get(keyId)
       if (key && key.down) {
         logger.keyActionMessage('down', keyIndex, keyId, key.down)
         actionRunner.runAction(key.down)
@@ -91,7 +97,7 @@ export class DeckController {
   onUp () {
     this.sd.on('up', (keyIndex: number) => {
       let keyId = this.getKeyFromIndex(keyIndex)
-      let key = this._keys.get(keyId)
+      let key = this.keys.get(keyId)
       if (key && key.up) {
         logger.keyActionMessage('up', keyIndex, keyId, key.up)
         actionRunner.runAction(key.up)
