@@ -1,4 +1,4 @@
-import { Icon } from '../models/Icon'
+import { Key } from '../models/Key'
 
 export class ImageHelper {
   getIconFilePath (icon: Icon): string {
