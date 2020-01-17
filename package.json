@@ -36,7 +36,7 @@
     "@types/node-hid": "^0.7.3",
     "chalk": "^2.4.2",
     "color": "^3.1.2",
-    "elgato-stream-deck": "^3.1.0",
+    "elgato-stream-deck": "^3.2.0",
     "figlet": "^1.2.4",
     "fs-extra": "^8.1.0",
     "jimp": "^0.8.5",
