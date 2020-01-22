@@ -110,4 +110,12 @@ export class DeckController {
       console.error(error)
     })
   }
+
+  getFirmwareVersion () {
+    return this.sd.getFirmwareVersion()
+  }
+
+  getSerialNumber () {
+    return this.sd.getSerialNumber()
+  }
 }
