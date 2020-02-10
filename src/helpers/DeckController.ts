@@ -89,7 +89,7 @@ export class DeckController {
       let key = this.keys.get(keyId)
       if (key && key.down) {
         logger.keyActionMessage('down', keyIndex, keyId, key.down)
-        actionRunner.runAction(key.down)
+        actionRunner.runAction(key.down, this)
       }
     })
   }
@@ -100,7 +100,7 @@ export class DeckController {
       let key = this.keys.get(keyId)
       if (key && key.up) {
         logger.keyActionMessage('up', keyIndex, keyId, key.up)
-        actionRunner.runAction(key.up)
+        actionRunner.runAction(key.up, this)
       }
     })
   }
