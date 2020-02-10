@@ -19,3 +19,9 @@
     command: code-insiders /
 - id: white
   bgColor: '#FFFFFF'
+- id: type-password
+  title: password
+  image: ./development/icons/key.png
+  down:
+    type: hide-keys
+    command: password
