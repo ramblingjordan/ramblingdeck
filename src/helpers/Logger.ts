@@ -9,7 +9,7 @@ export class Logger {
     'Action: ' + buttonMovement + '\n' +
     '  Type: ' + keyAction.type + '\n' +
     '  Command: ' + keyAction.command + '\n' +
-    '------------------------------'
+    '------------------------------\n'
     console.log(logMessage)
   }
 }
